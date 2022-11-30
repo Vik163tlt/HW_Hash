@@ -45,4 +45,3 @@ public final class Recipe {
         return Objects.hash(products, name);
     }
 }
-
