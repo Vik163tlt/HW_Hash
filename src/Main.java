@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Main {
     private static final Set<Product> products = new HashSet<>();
-    private static List<Recipe> recipes = new ArrayList<>();
+
     static Set<Passport> passports = new HashSet<>();
 
     public static void main(String[] args) {
@@ -10,7 +10,7 @@ public class Main {
         //task Products
 
         Product pasta = new Product("Макароны", 68.50f, 2);
-        Product milk = new Product("Молоко", 79.99f, 1);
+        Product milk = new Product("Молоко", 79.99f, 0);
         Product bananas = new Product("Бананы", 60.00f, 2);
         Product bread = new Product("Хлеб", 37.00f, 1);
         Product eggs = new Product("Яйца", 180.99f, 20);
@@ -18,14 +18,21 @@ public class Main {
 
         //task Recipe
 
-        Recipe sandwich = new Recipe(List.of(bread, butter), "Бутерброд с маслом");
-        Recipe omelet = new Recipe(List.of(milk, eggs), "Омлет");
-        Recipe milkshake = new Recipe(List.of(milk, bananas), "Банановый молочный коктель");
+        HashMap<Product,Integer> sandwich = new HashMap<>();
+        sandwich.put(bread, 2);
+        sandwich.put(butter,1);
 
+        HashMap<Product,Integer> omelet = new HashMap<>();
+        omelet.put(milk,1);
+        omelet.put(eggs,2);
 
-        recipes.add(sandwich);
-        recipes.add(omelet);
-        recipes.add(milkshake);
+        HashMap<Product,Integer> milkshake = new HashMap<>();
+        milkshake.put(milk,1);
+        milkshake.put(bananas,2);
+
+        System.out.printf("Стоимость продуктов по рецепту = %.2f\n",Recipe.getTotalCost(sandwich));
+        System.out.printf("Стоимость продуктов по рецепту = %.2f\n",Recipe.getTotalCost(omelet));
+        System.out.printf("Стоимость продуктов по рецепту = %.2f\n",Recipe.getTotalCost(milkshake));
 
         //task Passport
 

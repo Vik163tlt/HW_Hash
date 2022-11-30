@@ -1,37 +1,37 @@
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public final class Recipe {
-    private final List<Product> products;
-    private double totalCost;
+    private static Map<Product, Integer> products;
     private String name;
 
-    public Recipe(List<Product> products, int totalCost, String name) {
-        this.products = products;
-        this.totalCost = totalCost;
-        this.name = name;
-    }
-
-    public Recipe(List<Product> products, String name) {
-        this.products = products;
-        this.name = name;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public double getTotalCost() {
-        for (int i = 0; i < (products.size() + 1); i++) {
-            totalCost += products.get(i).getPrice();
+    public Recipe(HashMap<Product, Integer> products, String name) {
+        for (Integer quantity : products.values()) {
+            if (quantity <= 0) {
+                quantity = 1;
+            }
         }
-        return totalCost;
+        Recipe.products = products;
+        this.name = name;
+    }
+
+    public static Map<Product, Integer> getProducts() {
+        return products;
     }
 
     public String getName() {
         return name;
     }
 
+    public static double getTotalCost(HashMap<Product,Integer> map) {
+        double totalCost = 0;
+        for (Map.Entry<Product,Integer> entry :map.entrySet()){
+            totalCost += entry.getKey().getPrice() * entry.getValue();
+        }
+        return totalCost;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,7 +42,7 @@ public final class Recipe {
 
     @Override
     public int hashCode() {
-        return Objects.hash(products, totalCost, name);
+        return Objects.hash(products, name);
     }
 }
 
